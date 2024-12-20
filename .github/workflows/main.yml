@@ -40,10 +40,15 @@ jobs:
       # Access secrets from Google Secret Manager
       - name: Fetch DB Secrets from Google Secret Manager
         run: |
-          export DB_URL=$(gcloud secrets versions access latest --secret="DB_URL")
-          export DB_USERNAME=$(gcloud secrets versions access latest --secret="DB_USERNAME")
-          export DB_PASSWORD=$(gcloud secrets versions access latest --secret="DB_PASSWORD")
-        
+          DB_URL=$(gcloud secrets versions access latest --secret="DB_URL")
+          DB_USERNAME=$(gcloud secrets versions access latest --secret="DB_USERNAME")
+          DB_PASSWORD=$(gcloud secrets versions access latest --secret="DB_PASSWORD")
+          
+          # Debug: Print the values (you can remove these lines after validation)
+          echo "DB_URL=$DB_URL"
+          echo "DB_USERNAME=$DB_USERNAME"
+          echo "DB_PASSWORD=$DB_PASSWORD"
+
       # Configure Docker to authenticate with Google Cloud Artifact Registry
       - name: Configure Docker to use gcloud credentials
         run: |
@@ -58,13 +63,6 @@ jobs:
       - name: Push Docker Image to Artifact Registry
         run: |
           docker push us-central1-docker.pkg.dev/gcp-peoject-1/second-repo/taskmob
-
-      # Debug: Print out the environment variables (not recommended for sensitive data)
-      - name: Print environment variables (for debugging)
-        run: |
-          echo "SPRING_DATASOURCE_URL=$DB_URL"
-          echo "SPRING_DATASOURCE_USERNAME=$DB_USERNAME"
-          echo "SPRING_DATASOURCE_PASSWORD=$DB_PASSWORD"
 
       # Deploy to Google Cloud Run with DB details as environment variables
       - name: Deploy to Google Cloud Run
