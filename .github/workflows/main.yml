@@ -37,7 +37,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.SECONDPROJECT }}
 
-      # Access secrets from Google Secret Manager (for debugging, this step can be removed after validation)
+      # Access secrets from Google Secret Manager
       - name: Fetch DB Secrets from Google Secret Manager
         run: |
           DB_URL=$(gcloud secrets versions access latest --secret="DB_URLS")
@@ -72,5 +72,6 @@ jobs:
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
+            --clear-env-vars \
             --set-secrets SPRING_DATASOURCE_URL=projects/209421748019/secrets/DB_URLS:latest,SPRING_DATASOURCE_USERNAME=projects/209421748019/secrets/DB_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=projects/209421748019/secrets/DB_PASSWORD:latest \
             --service-account second-repo@gcp-peoject-1.iam.gserviceaccount.com
