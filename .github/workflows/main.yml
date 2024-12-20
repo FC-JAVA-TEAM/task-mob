@@ -37,12 +37,12 @@ jobs:
         with:
           credentials_json: ${{ secrets.SECONDPROJECT }}
 
-      # Access secrets from Google Secret Manager (for debugging, this step can be removed after validation)
+      # Access secrets from Google Secret Manager
       - name: Fetch DB Secrets from Google Secret Manager
         run: |
-          DB_URL=$(gcloud secrets versions access latest --secret="DB_URL")
-          DB_USERNAME=$(gcloud secrets versions access latest --secret="DB_USERNAME")
-          DB_PASSWORD=$(gcloud secrets versions access latest --secret="DB_PASSWORD")
+          DB_URL=$(gcloud secrets versions access latest --secret="DB_URL" --project=gcp-peoject-1)
+          DB_USERNAME=$(gcloud secrets versions access latest --secret="DB_USERNAME" --project=gcp-peoject-1)
+          DB_PASSWORD=$(gcloud secrets versions access latest --secret="DB_PASSWORD" --project=gcp-peoject-1)
           
           # Debug: Print the values (you can remove these lines after validation)
           echo "DB_URL=$DB_URL"
@@ -64,7 +64,7 @@ jobs:
         run: |
           docker push us-central1-docker.pkg.dev/gcp-peoject-1/second-repo/taskmob
 
-      # Deploy to Google Cloud Run with DB details as environment variables from Secret Manager
+      # Deploy to Google Cloud Run with DB details as environment variables
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy second-service \
