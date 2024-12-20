@@ -69,8 +69,8 @@ public class ActivityDialogManager {
 
 	public void openUpdateActivityDialogWindow(LocalDate date) {
 		Dialog dialog = new Dialog();
-		dialog.setWidth("50%");
-		dialog.setHeight("57%");
+		dialog.setWidth("auto");
+		dialog.setHeight("auto");
 
 		LocalDate currentDate = LocalDate.now();
 
