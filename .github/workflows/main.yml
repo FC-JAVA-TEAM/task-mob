@@ -37,7 +37,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.SECONDPROJECT }}
 
-      # Access secrets from Google Secret Manager (this is only for debugging purposes)
+      # Access secrets from Google Secret Manager (for debugging, this step can be removed after validation)
       - name: Fetch DB Secrets from Google Secret Manager
         run: |
           DB_URL=$(gcloud secrets versions access latest --secret="DB_URL")
@@ -64,7 +64,7 @@ jobs:
         run: |
           docker push us-central1-docker.pkg.dev/gcp-peoject-1/second-repo/taskmob
 
-      # Deploy to Google Cloud Run with DB details as environment variables
+      # Deploy to Google Cloud Run with DB details as environment variables from Secret Manager
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy second-service \
@@ -72,4 +72,4 @@ jobs:
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
-            --set-env-vars SPRING_DATASOURCE_URL=$DB_URL,SPRING_DATASOURCE_USERNAME=$DB_USERNAME,SPRING_DATASOURCE_PASSWORD=$DB_PASSWORD
+            --set-secrets SPRING_DATASOURCE_URL=projects/gcp-peoject-1/secrets/DB_URL:latest,SPRING_DATASOURCE_USERNAME=projects/gcp-peoject-1/secrets/DB_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=projects/gcp-peoject-1/secrets/DB_PASSWORD:latest
