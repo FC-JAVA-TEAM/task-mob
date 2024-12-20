@@ -52,6 +52,13 @@ jobs:
         run: |
           docker push us-central1-docker.pkg.dev/gcp-peoject-1/second-repo/taskmob
 
+      # Debug: Print out the environment variables (not recommended for sensitive data)
+      - name: Print environment variables (for debugging)
+        run: |
+          echo "SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}"
+          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}"
+          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}"
+
       # Deploy to Google Cloud Run with DB details as environment variables
       - name: Deploy to Google Cloud Run
         run: |
