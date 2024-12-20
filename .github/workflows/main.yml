@@ -72,4 +72,4 @@ jobs:
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
-            --set-secrets SPRING_DATASOURCE_URL=projects/gcp-peoject-1/secrets/DB_URL:latest,SPRING_DATASOURCE_USERNAME=projects/gcp-peoject-1/secrets/DB_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=projects/gcp-peoject-1/secrets/DB_PASSWORD:latest
+            --set-env-vars SPRING_DATASOURCE_URL=$DB_URL,SPRING_DATASOURCE_USERNAME=$DB_USERNAME,SPRING_DATASOURCE_PASSWORD=$DB_PASSWORD
