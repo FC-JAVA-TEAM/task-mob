@@ -52,7 +52,7 @@ jobs:
         run: |
           docker push us-central1-docker.pkg.dev/gcp-peoject-1/second-repo/taskmob
 
-      # Deploy to Google Cloud Run with DB details
+      # Deploy to Google Cloud Run with DB details as environment variables
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy second-service \
@@ -60,4 +60,4 @@ jobs:
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
-         
+            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.DB_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }},SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}
