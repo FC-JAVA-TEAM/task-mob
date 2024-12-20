@@ -1,0 +1,119 @@
+.calendar-view {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+}
+
+.header-layout {
+    margin-bottom: 10px;
+}
+
+.nav-button {
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    background-color: #0056b3;
+}
+
+.month-year-label {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 15px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.weekday-header {
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.day-cell {
+    min-height: 100px;
+    padding: 5px;
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.day-cell:hover {
+    background-color: #f9f9f9;
+}
+
+.today {
+    border: 2px solid #007bff;
+}
+
+.day-number {
+    font-weight: bold;
+    margin-bottom: 5px;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.tasks-container {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.task {
+    font-size: 12px;
+    background-color: #e7f3ff;
+    padding: 3px 5px;
+    margin-bottom: 2px;
+    border-radius: 4px;
+    color: #0056b3;
+}
+
+.task:hover {
+    background-color: #d0e7ff;
+}
+
+.empty-cell {
+    background-color: #f9f9f9;
+}
+
+.task-dialog {
+    width: 400px;
+    max-width: 90%;
+}
+
+.dialog-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.save-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.save-button:hover {
+    background-color: #218838;
+}
+
+.cancel-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #c82333;
+}

@@ -1,0 +1,43 @@
+@import url('./main-layout.css');
+
+/* Define the login card style */
+.login-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 400px;
+    max-width: 100%;
+    margin: auto;
+}
+
+/* Style for the LoginForm itself */
+.login-form {
+    background-color: #fafafa;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the login button */
+.login-form vaadin-button {
+    background-color: #4CAF50;
+    color: white;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Style for the text input fields */
+.login-form vaadin-text-field,
+.login-form vaadin-password-field {
+    margin-bottom: 15px;
+}
+
+/* Adding focus effect */
+.login-form vaadin-text-field:focus,
+.login-form vaadin-password-field:focus {
+    border-color: #4CAF50;
+}
