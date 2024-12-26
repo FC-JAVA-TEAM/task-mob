@@ -75,3 +75,12 @@ jobs:
             --clear-env-vars \
             --set-secrets SPRING_DATASOURCE_URL=projects/209421748019/secrets/DB_URLS:latest,SPRING_DATASOURCE_USERNAME=projects/209421748019/secrets/DB_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=projects/209421748019/secrets/DB_PASSWORD:latest \
             --service-account second-repo@gcp-peoject-1.iam.gserviceaccount.com
+
+      # Send an email notification
+      - name: Send Email Notification
+        uses: cinotify/github-action@main
+        with:
+          to: 'shaikh.jalil@telusinternational.com'
+          subject: 'Building main'
+          body: '<em>This is a notification from GitHub actions.</em>'
+          type: 'text/html'
