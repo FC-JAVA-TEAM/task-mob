@@ -30,7 +30,7 @@ import jakarta.annotation.security.PermitAll;
 
 @Route("namaz")
 @PageTitle("Namaz Tracker")
-@Menu(icon = "line-awesome/svg/pencil-ruler-solid.svg", order = 1)
+//@Menu(icon = "line-awesome/svg/pencil-ruler-solid.svg", order = 1)
 @CssImport("./styles/styles.css")
 @PermitAll
 public class NamazView extends Div implements RouterLayout {
