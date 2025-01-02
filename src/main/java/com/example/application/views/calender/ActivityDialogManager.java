@@ -114,8 +114,8 @@ public class ActivityDialogManager {
 		// Add the tabs and corresponding layouts to the TabSheet
 		tabSheet.add(activityTab, activityLayout);
 		tabSheet.add(moodTab, moodLayout);
-		// tabSheet.add(namajTab, new Span("TO DO..."));
-		tabSheet.add(namajTab, namajLayout);
+		 tabSheet.add(namajTab, new Span("TO DO..."));
+		//tabSheet.add(namajTab, namajLayout);
 		tabSheet.add(dailyViewTab, dailyViewLayout);
 
 		// Add the TabSheet to the dialog
