@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
+      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -31,13 +31,25 @@ jobs:
         with:
           project_id: gcp-peoject-1
 
-      # Authenticate to Google Cloud using service account
+      # Authenticate to Google Cloud using the service account
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.SECONDPROJECT }}
 
-      # Configure Docker to authenticate with Google Cloud Artifact Registry
+      # Access secrets from Google Secret Manager
+      - name: Fetch DB Secrets from Google Secret Manager
+        run: |
+          DB_URL=$(gcloud secrets versions access latest --secret="DB_URLS")
+          DB_USERNAME=$(gcloud secrets versions access latest --secret="DB_USERNAME")
+          DB_PASSWORD=$(gcloud secrets versions access latest --secret="DB_PASSWORD")
+          
+          # Debug: Print the values (you can remove these lines after validation)
+          echo "DB_URL=$DB_URL"
+          echo "DB_USERNAME=$DB_USERNAME"
+          echo "DB_PASSWORD=$DB_PASSWORD"
+
+      # Configure Docker to use Google Cloud credentials
       - name: Configure Docker to use gcloud credentials
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
@@ -52,14 +64,7 @@ jobs:
         run: |
           docker push us-central1-docker.pkg.dev/gcp-peoject-1/second-repo/taskmob
 
-      # Debug: Print out the environment variables (not recommended for sensitive data)
-      - name: Print environment variables (for debugging)
-        run: |
-          echo "SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}"
-          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}"
-          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}"
-
-      # Deploy to Google Cloud Run with DB details as environment variables
+      # Deploy to Google Cloud Run with DB details as environment variables from Secret Manager
       - name: Deploy to Google Cloud Run
         run: |
           gcloud run deploy second-service \
@@ -67,4 +72,15 @@ jobs:
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
-            --set-env-vars SPRING_DATASOURCE_URL=${{ secrets.DB_URL }},SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }},SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}
+            --clear-env-vars \
+            --set-secrets SPRING_DATASOURCE_URL=projects/209421748019/secrets/DB_URLS:latest,SPRING_DATASOURCE_USERNAME=projects/209421748019/secrets/DB_USERNAME:latest,SPRING_DATASOURCE_PASSWORD=projects/209421748019/secrets/DB_PASSWORD:latest \
+            --service-account second-repo@gcp-peoject-1.iam.gserviceaccount.com
+
+      # Send an email notification
+      - name: Send Email Notification
+        uses: cinotify/github-action@main
+        with:
+          to: 'shaikh.jalil@telusinternational.com'
+          subject: 'Building main'
+          body: '<em>This is a notification from GitHub actions.</em>'
+          type: 'text/html'
