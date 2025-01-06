@@ -37,6 +37,7 @@ public class ActivityAddDeleteForm {
 	public void openDeleteDailyActivityDialog() {
 		Dialog dialog = new Dialog();
 		dialog.setWidth("400px");
+		dialog.setWidth("400px");
 		FormLayout formLayout = new FormLayout();
 		// Date Pickers for selecting the start and end dates
 		DatePicker startDatePicker = new DatePicker("Start May Activity From");
